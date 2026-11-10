@@ -1,0 +1,16 @@
+{
+    "urdf_path": {
+        "barrett": "data/urdf/barrett_adagrasp/model.urdf",
+        "allegro": "data/urdf/allegro_hand_description/allegro_hand_description_right.urdf",
+        "shadowhand": "data/urdf/sr_grasp_description/urdf/shadowhand.urdf",
+        "leaphand": "data/urdf/leap_hand/robot.urdf",
+        "inspire": "data/urdf/inspire_hand/inspire_hand_right.urdf"
+    },
+    "meshes_path": {
+        "barrett": "data/urdf/barrett_adagrasp/meshes",
+        "allegro": "data/urdf/allegro_hand_description/meshes",
+        "shadowhand": "data/urdf/sr_grasp_description/meshes",
+        "leaphand": "data/urdf/leap_hand",
+        "inspire": "data/urdf/inspire_hand"
+    }
+}

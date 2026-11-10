@@ -1,0 +1,47 @@
+hydra:
+  run:
+    dir: ${exp_dir}
+  output_subdir: null
+
+defaults:
+  - _self_
+  - diffuser: ddpm
+  - model: unet_grasp
+  - task: grasp_gen_ur
+  - optimizer: grasp_with_object
+
+
+exp_name: default
+output_dir: outputs
+robot_name: [allegro, barrett, shadowhand]
+exp_dir: outputs
+checkpoint: checkpoints/pretrained.pth
+seed: 0
+objects: null
+penetration_optimization: null
+tb_dir: ${exp_dir}/tb_logs
+vis_dir: ${exp_dir}/visual
+ckpt_dir: ${exp_dir}/ckpts
+
+masked_fingers: null
+morph_aware_grasp_loss: false
+
+slurm: false
+gpu: 0
+
+save_model_interval: 50
+save_model_seperately: true
+save_scene_model: true
+
+llm:
+  enabled: false
+
+use_dpmsolver: false
+
+dataset:
+  active: MultiDexShadowHandUR
+  paths:
+    MultiDexShadowHandUR:
+      asset_dir: data/MultiDex_filtered
+      asset_dir_slurm: data/MultiDex_filtered
+      epoch: 2000

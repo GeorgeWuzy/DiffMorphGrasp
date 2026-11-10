@@ -1,0 +1,7 @@
+{
+    "allegro": [],
+    "barrett": [],
+    "shadowhand": ["forearm", "wrist", "ffknuckle", "mfknuckle", "rfknuckle", "lfknuckle", "thbase"],
+    "leaphand": [],
+    "inspire": ["base"]
+}

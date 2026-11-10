@@ -1,0 +1,49 @@
+name: grasp_gen_ur
+lr: 1e-4
+eval_interval: 1
+eval_visualize: 1
+robot_name: ${robot_name}
+
+train:
+  batch_size: 256
+  num_workers: 8
+  num_epochs: ${dataset.paths.${dataset.active}.epoch}
+  log_step: 100
+
+test:
+  epoch: null
+  batch_size: 64
+  num_workers: 0
+
+dataset:
+  robot_name: ${robot_name}
+  masked_fingers: ${masked_fingers}
+  use_llm: ${llm.enabled}
+  name: ${dataset.active}
+  desc: '[${dataset.active}] -- dataset used for grasp pose generation'
+  normalize_x: true
+  normalize_x_trans: true
+  modeling_keys: ['allDoFs']
+  num_points: 2048
+  frame_interval_train: 5
+  frame_interval_test: 10
+  device: cuda
+  use_color: false
+  use_normal: true
+  is_downsample: true
+  train_transforms: ['NumpyToTensor']
+  test_transforms: ['NumpyToTensor']
+  transform_cfg: {}
+  asset_dir: ${dataset.paths.${dataset.active}.asset_dir}
+  asset_dir_slurm: ${dataset.paths.${dataset.active}.asset_dir_slurm}
+
+visualizer:
+  name: GraspGenURVisualizer
+  objects: ${objects}
+  asset_dir: ${dataset.paths.${dataset.active}.asset_dir}
+  penetration_optimization: ${penetration_optimization}
+  masked_fingers: ${masked_fingers}
+  ksample: ${task.test.batch_size}
+  vis_denoising: false
+  visualize: false
+  use_llm: ${llm.enabled}

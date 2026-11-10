@@ -1,0 +1,18 @@
+name: GraspWithObject
+
+guidance_scale: 1
+penetration_weight: 1000.0
+penetration_optimization: ${penetration_optimization}
+grad_scale: 0.1
+robot_name: ${robot_name}
+clip_grad_by_value:
+  min: -0.1
+  max: 0.1
+asset_dir: ${task.dataset.asset_dir}
+asset_dir_slurm: ${task.dataset.asset_dir_slurm}
+
+batch_size: ${task.test.batch_size}
+modeling_keys: ${task.dataset.modeling_keys}
+
+normalize_x: ${task.dataset.normalize_x}
+normalize_x_trans: ${task.dataset.normalize_x_trans}
