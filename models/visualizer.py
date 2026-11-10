@@ -11,7 +11,8 @@ from utils.penetration import refine_grasps, should_optimize_penetration
 from utils.registry import Registry
 from utils.rot6d import random_rot, rot_to_orthod6d
 from utils.retarget import align_inspire_root, align_leap_root, couple_inspire_joints
-
+from pathlib import Path
+import pytorch_kinematics as pk
 VISUALIZER = Registry('Visualizer')
 
 
@@ -36,6 +37,11 @@ class GraspGenURVisualizer:
     def visualize(self, model, dataloaders, save_dir):
         model.eval()
         device = model.device
+        if 'shadowhand' in dataloaders: # add joint limits for shadowhand
+            chain = pk.build_chain_from_urdf(
+                Path('data/urdf/shadowhand/shadow_hand_right_extended.urdf').read_bytes()
+            )
+            shadow_limits = tuple(torch.as_tensor(bound[6:], device=device) for bound in chain.get_joint_limits())
         objects = sorted({name for loader in dataloaders.values() for name in loader.dataset._test_split})
         if self.objects is not None:
             unknown = set(self.objects) - set(objects)
@@ -87,6 +93,8 @@ class GraspGenURVisualizer:
                     translation = dataset.trans_denormalize(outputs[:, :3].cpu()).to(device) if dataset.normalize_x_trans else outputs[:, :3]
                     translation = (rotation.transpose(1, 2) @ translation.unsqueeze(-1)).squeeze(-1)
                     rot6d = rot_to_orthod6d(rotation.transpose(1, 2))
+                    if robot == 'shadowhand': # clamp shadowhand joint angles
+                        angles = angles.clamp(*shadow_limits)
                     poses = torch.cat((translation, rot6d, angles), dim=-1).float().cpu()
                     if robot == "leaphand":
                         poses = align_leap_root(poses)
