@@ -98,6 +98,14 @@ class GraspGenURVisualizer:
                         with torch.enable_grad():
                             refined, penetration_before, penetration_after = refine_grasps(
                                 poses.to(device), object_name, self.asset_dir, robot)
+                            if robot == 'leaphand': # refine leaphand's penetration
+                                deep = torch.nonzero(penetration_after > 0.005).flatten()
+                                if deep.numel():
+                                    candidate, _, candidate_depth = refine_grasps(
+                                        refined[deep], object_name, self.asset_dir, robot)
+                                    better = candidate_depth < penetration_after[deep]
+                                    refined[deep[better]] = candidate[better]
+                                    penetration_after[deep[better]] = candidate_depth[better]
                         poses = refined.cpu()
                     if not torch.isfinite(poses).all():
                         raise RuntimeError(f'Non-finite samples: {robot}/{object_name}')

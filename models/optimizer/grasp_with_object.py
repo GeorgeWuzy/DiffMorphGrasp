@@ -14,6 +14,7 @@ from termcolor import cprint
 from utils.myutils import unified_to_joint_dim, joint_to_unified_dim
 from utils.penetration import dense_hand_model, object_sdf, sample_sdf, set_dense_surface_points, should_optimize_penetration
 from utils.retarget import align_inspire_root, align_leap_root, couple_inspire_joints
+from pytorch3d.ops import knn_points
 
 @OPTIMIZER.register()
 class GraspWithObject(Optimizer):
@@ -155,7 +156,13 @@ class GraspWithObject(Optimizer):
         hand_keypoint = hand_model.get_keypoints(q=pose)
         SRF_loss_value = SRF_loss(hand_keypoint)
         loss = self.weight_SRF_loss[robot_name] * SRF_loss_value + self.weight_SPF_loss[robot_name] * SPF_loss_value + self.weight_ERF_loss[robot_name] * ERF_loss_value
-        if robot_name != "inspire" and should_optimize_penetration(robot_name, self.penetration_optimization):
+        if robot_name == "leaphand": # optimize leaphand's fingertip
+            fingertips = hand_model.get_keypoints(q=pose)
+            fingertip_distance = knn_points(
+                fingertips.float(), obj_pcd.float(), K=1
+            ).dists[..., 0].clamp_min(1e-8).sqrt()
+            loss = loss + (fingertip_distance - 0.012).clamp_min(0).mean()
+        if should_optimize_penetration(robot_name, self.penetration_optimization):
             object_name = data['scene_id'][0]
             if object_name not in self._object_sdf:
                 self._object_sdf[object_name] = object_sdf(self.asset_dir, object_name, self.device)
