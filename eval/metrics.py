@@ -1,5 +1,3 @@
-"""Success-conditioned pose diversity."""
-
 import torch
 
 

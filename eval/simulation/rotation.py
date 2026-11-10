@@ -1,5 +1,3 @@
-"""Pose conversions used by the simulation evaluator."""
-
 import numpy as np
 import torch
 from scipy.spatial.transform import Rotation

@@ -1,5 +1,3 @@
-"""Grasp controller, adapted from code by GeorgeWuzy (MIT)."""
-
 import torch
 
 from utils.retarget import couple_inspire_joints

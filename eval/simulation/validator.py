@@ -1,5 +1,3 @@
-"""Isaac Gym stability test, adapted from code by GeorgeWuzy (MIT)."""
-
 from isaacgym import gymapi, gymtorch
 
 import math
