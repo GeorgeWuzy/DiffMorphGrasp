@@ -96,23 +96,18 @@ Set `penetration_optimization=true` to optimize hand-object penetration.
 
 ```bash
 export LD_LIBRARY_PATH="$CONDA_PREFIX/lib:$PWD/isaacgym/python/isaacgym/_bindings/linux-x86_64:${LD_LIBRARY_PATH:-}"
-bash scripts/evaluate_all.sh \
-  outputs/samples/YOUR_TIMESTAMP
+bash scripts/evaluate_all.sh outputs/samples/YOUR_TIMESTAMP
 ```
 
 To evaluate one hand:
 ```bash
-python scripts/evaluate.py \
-  --input outputs/samples/YOUR_TIMESTAMP/barrett \
-  --robot barrett
+python scripts/evaluate.py --input outputs/samples/YOUR_TIMESTAMP/barrett --robot barrett
 ```
 
 ## Visualize
 
 ```bash
-python scripts/visualize_grasp.py \
-  --input outputs/samples/YOUR_TIMESTAMP/shadowhand/contactdb+apple.pt \
-  --robot shadowhand --index 0 --output outputs/visualizations/apple.html
+python scripts/visualize_grasp.py --input outputs/samples/YOUR_TIMESTAMP/shadowhand/contactdb+apple.pt --robot shadowhand --index 0 --output outputs/visualizations/apple.html
 ```
 
 ## Training
