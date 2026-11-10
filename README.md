@@ -1,6 +1,6 @@
-# DiffMorphGrasp [CoRl 2026]
+# DiffMorphGrasp [CoRL 2026]
 
-**DiffMorphGrasp: A Diffusion Framework Conditioned on Hand Morphology for Cross-Embodiment Grasp Generation**
+The official repository of **DiffMorphGrasp: A Diffusion Framework Conditioned on Hand Morphology for Cross-Embodiment Grasp Generation**
 
 <!-- 
 [Zhiyuan Wu](https://georgewuzy.github.io/)<sup>1</sup>,
@@ -12,13 +12,22 @@
 
 <sup>1</sup> King's College London · <sup>2</sup> Imperial College London -->
 
-[Paper](https://arxiv.org/pdf/2602.00915) · [arXiv](https://arxiv.org/abs/2602.00915) · [Project](https://georgewuzy.github.io/DiffMorphGrasp-website/)
+
+<p align="center">
+    <a href='https://arxiv.org/pdf/2602.00915'>
+      <img src='https://img.shields.io/badge/Paper-arXiv-red?style=plastic&logo=arXiv&logoColor=red' alt='Paper arXiv'>
+    </a>
+    <a href='https://arxiv.org/abs/2602.00915'>
+      <img src='https://img.shields.io/badge/Paper-PDF-FF9547?style=plastic&logo=adobeacrobatreader&logoColor=FF9547' alt='Paper PDF'>
+    </a>
+    <a href='https://georgewuzy.github.io/DiffMorphGrasp-website/'>
+      <img src='https://img.shields.io/badge/Project-Page-66C0FF?style=plastic&logo=Google%20chrome&logoColor=66C0FF' alt='Project Page'>
+    </a>
+</p>
 
 ![DiffMorphGrasp pipeline](assets/pipeline.png)
 
-A diffusion framework conditioned on hand morphology for cross-embodiment grasp generation.
-
-This release supports the three seen hands **Barrett, Allegro, and ShadowHand** and two unseen hands **Leap Hand and Inspire Hand** inference.
+This release supports the three seen hands **Barrett, Allegro, and ShadowHand** (training and inference) and two unseen hands **Leap Hand and Inspire Hand** (inference).
 
 ## Dependencies
 
@@ -64,8 +73,7 @@ data/MultiDex_filtered/
   object/<dataset>/<object>/<object>.urdf
 ```
 
-The hand URDFs and meshes are included in `data/urdf/`. The object URDFs and
-their referenced `.stl` meshes must be downloaded with the dataset. The default paths are configured in `configs/default.yaml`.
+The default paths are configured in `configs/default.yaml`.
 
 ## Grasp Generation Inference
 
@@ -81,6 +89,7 @@ python sample.py 'robot_name=[inspire]'
 ```
 
 For a single-object run, add `'objects=[contactdb+apple]'`.
+
 Set `penetration_optimization=true` to optimize hand-object penetration.
 
 ## Evaluate
@@ -109,12 +118,6 @@ python scripts/visualize_grasp.py \
 
 ```bash
 python train.py exp_dir=outputs/train_baseline
-```
-
-## Tests
-
-```bash
-python -m unittest discover -s tests -v
 ```
 
 ## Citation
