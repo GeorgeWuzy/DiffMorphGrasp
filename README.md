@@ -14,10 +14,10 @@ The official repository of **DiffMorphGrasp: A Diffusion Framework Conditioned o
 
 
 <p align="center">
-    <a href='https://arxiv.org/pdf/2602.00915'>
+    <a href='https://arxiv.org/abs/2602.00915'>
       <img src='https://img.shields.io/badge/Paper-arXiv-red?style=plastic&logo=arXiv&logoColor=red' alt='Paper arXiv'>
     </a>
-    <a href='https://arxiv.org/abs/2602.00915'>
+    <a href='https://arxiv.org/pdf/2602.00915'>
       <img src='https://img.shields.io/badge/Paper-PDF-FF9547?style=plastic&logo=adobeacrobatreader&logoColor=FF9547' alt='Paper PDF'>
     </a>
     <a href='https://georgewuzy.github.io/DiffMorphGrasp-website/'>
