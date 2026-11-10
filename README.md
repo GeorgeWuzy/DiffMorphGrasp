@@ -38,24 +38,24 @@ conda activate diffmorphgrasp
 pip install torch==2.4.0 torchvision==0.19.0 --index-url https://download.pytorch.org/whl/cu124
 git clone https://github.com/facebookresearch/pytorch3d.git
 cd pytorch3d
-# export MAX_JOBS=4 # set MAX_JOBS if your workstation doesn't have enough memory
 python setup.py install
-unset MAX_JOBS
 cd ../
 ``` 
 
 Install required packages.
 ```bash  
 pip install -r requirements.txt
+python -m pip install --no-build-isolation --no-deps 'git+https://github.com/Silverster98/pointops.git@86c68b1e63092152b4ab14ff09b832c5d2d0dc97'
 ``` 
 
 Install Isaac Gym Environment (for validation).
 
 Download [Isaac Gym](https://developer.nvidia.com/isaac-gym/download) from the official website, then:
 ```bash  
-tar -xvf IsaacGym_Preview_4_Package.tar.gz
+tar -xvf IsaacGym_Preview_4_Package.tar
 cd isaacgym/python
 pip install -e .
+cd ../../
 ``` 
 
 ## Data and checkpoint
@@ -95,6 +95,7 @@ Set `penetration_optimization=true` to optimize hand-object penetration.
 ## Evaluate
 
 ```bash
+export LD_LIBRARY_PATH="$CONDA_PREFIX/lib:$PWD/isaacgym/python/isaacgym/_bindings/linux-x86_64:${LD_LIBRARY_PATH:-}"
 bash scripts/evaluate_all.sh \
   outputs/samples/YOUR_TIMESTAMP
 ```
@@ -110,8 +111,8 @@ python scripts/evaluate.py \
 
 ```bash
 python scripts/visualize_grasp.py \
-  --input outputs/samples/YOUR_TIMESTAMP/barrett/contactdb+apple.pt \
-  --robot barrett --index 0 --output outputs/visualizations/apple.html
+  --input outputs/samples/YOUR_TIMESTAMP/shadowhand/contactdb+apple.pt \
+  --robot shadowhand --index 0 --output outputs/visualizations/apple.html
 ```
 
 ## Training
