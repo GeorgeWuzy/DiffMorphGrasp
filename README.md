@@ -31,32 +31,32 @@ This release supports the three seen hands **Barrett, Allegro, and ShadowHand** 
 
 ## Dependencies
 
-Create a conda environment. The following commands use CUDA 12.4:
-
-```bash
-git clone https://github.com/GeorgeWuzy/DiffMorphGrasp.git
-cd DiffMorphGrasp
+Create a new conda environment. My CUDA version (nvcc --version) is 12.4
+```bash  
 conda create -n diffmorphgrasp python=3.8 pip
 conda activate diffmorphgrasp
 pip install torch==2.4.0 torchvision==0.19.0 --index-url https://download.pytorch.org/whl/cu124
-```
+git clone https://github.com/facebookresearch/pytorch3d.git
+cd pytorch3d
+# export MAX_JOBS=4 # set MAX_JOBS if your workstation doesn't have enough memory
+python setup.py install
+unset MAX_JOBS
+cd ../
+``` 
 
-Install PyTorch3D and the remaining Python dependencies:
-
-```bash
-pip install --no-build-isolation 'git+https://github.com/facebookresearch/pytorch3d.git@v0.7.8'
+Install required packages.
+```bash  
 pip install -r requirements.txt
-pip install --no-build-isolation 'git+https://github.com/Silverster98/pointops.git@86c68b1e63092152b4ab14ff09b832c5d2d0dc97'
-```
+``` 
 
-For grasp evaluation, download [Isaac Gym Preview 4](https://developer.nvidia.com/isaac-gym/download) from NVIDIA and install it separately:
+Install Isaac Gym Environment (for validation).
 
-```bash
-pip install --no-deps -e /path/to/isaacgym/python
-export LD_LIBRARY_PATH="$CONDA_PREFIX/lib:${LD_LIBRARY_PATH:-}"
-```
-
-Building PyTorch3D and pointops requires a CUDA toolkit and C++ compiler compatible with the installed PyTorch version.
+Download [Isaac Gym](https://developer.nvidia.com/isaac-gym/download) from the official website, then:
+```bash  
+tar -xvf IsaacGym_Preview_4_Package.tar.gz
+cd isaacgym/python
+pip install -e .
+``` 
 
 ## Data and checkpoint
 
