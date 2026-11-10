@@ -156,11 +156,9 @@ class GraspWithObject(Optimizer):
         hand_keypoint = hand_model.get_keypoints(q=pose)
         SRF_loss_value = SRF_loss(hand_keypoint)
         loss = self.weight_SRF_loss[robot_name] * SRF_loss_value + self.weight_SPF_loss[robot_name] * SPF_loss_value + self.weight_ERF_loss[robot_name] * ERF_loss_value
-        if robot_name == "leaphand": # optimize leaphand's fingertip
-            fingertips = hand_model.get_keypoints(q=pose)
-            fingertip_distance = knn_points(
-                fingertips.float(), obj_pcd.float(), K=1
-            ).dists[..., 0].clamp_min(1e-8).sqrt()
+        if robot_name in ("leaphand", "inspire"): # refine leaphand and inspire fingertip
+            fingertips = hand_keypoint if robot_name == "leaphand" else hand_keypoint[:, [3, 6, 9, 12, 15]]
+            fingertip_distance = knn_points(fingertips.float(), obj_pcd.float(), K=1).dists[..., 0].clamp_min(1e-8).sqrt()
             loss = loss + (fingertip_distance - 0.012).clamp_min(0).mean()
         if should_optimize_penetration(robot_name, self.penetration_optimization):
             object_name = data['scene_id'][0]

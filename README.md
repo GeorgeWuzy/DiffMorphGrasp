@@ -107,7 +107,7 @@ python scripts/evaluate.py --input outputs/samples/YOUR_TIMESTAMP/barrett --robo
 ## Visualize
 
 ```bash
-python scripts/visualize_grasp.py --input outputs/samples/YOUR_TIMESTAMP/shadowhand/contactdb+apple.pt --robot shadowhand --index 0 --output outputs/visualizations/apple.html
+python scripts/visualize_grasp.py --input outputs/samples/YOUR_TIMESTAMP --robot shadowhand --object apple --index 0
 ```
 
 ## Training
